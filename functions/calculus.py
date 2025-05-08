@@ -29,6 +29,18 @@ def substract(x,y):
     result=x%y
     return result
 
+def sum(*numbers):
+    sum=0
+    for i in numbers:
+        sum+=i
+    print(sum)
+
+
+# when we access them they will be put in a tuple that is why we are iterating
+
+def 
+
+
 
 
     
