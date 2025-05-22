@@ -19,3 +19,37 @@ def divisiblity_check(n):
             print(f"{i} is divisible by 5")
         else:
             print(f"{i} is not divisible by 2,3 or 5")
+
+def countdown(start):
+    while start!=0:
+     print(start)
+     start-=1
+
+def countdown_with_break(start,stop):
+    while(start>0):
+        print(start)
+        if(start==stop):
+            break
+        start-=1
+
+
+def swap_list(listnums):
+    x=len(listnums)
+    i=listnums[0]
+    j=x-1
+    while(i<j):
+        temp=i
+        listnums[i]=listnums[j]
+        j=temp
+        i+=1
+        j+=1
+    print(listnums)
+swap_list()
+
+def countdown_with_continue(start):
+    while start>0:
+        if start%2==0:
+            start-=1
+            continue
+        print(start)
+        start-=1
