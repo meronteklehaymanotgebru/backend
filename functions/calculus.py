@@ -63,6 +63,19 @@ def diamond():
            print("*", end=" ")
         print()
 
+def selam():
+    stari = []
+    for i in range(6):
+        stari.append("*")
+        print(stari)
+    for i in range(6):
+        stari.pop()   # pop removes the last element
+        print(stari)
+selam()
+
+
+
+
 
 
 
