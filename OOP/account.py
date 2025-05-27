@@ -61,7 +61,7 @@ class Account:
             return "Account is closed."
         if self.is_frozen:
             return "Account is frozen."
-        if self.loans < 500 and money > 0:
+        if self.loans+money <= 500 and money > 0:
             self.deposits.append(money)
             self.loans += money
             return f"{self.name}, loan approved. New balance: {self.get_balance()}"
@@ -97,6 +97,8 @@ class Account:
     def apply_interest(self):
         if self.is_closed:
             return "Account is closed."
+        if self.get_balance()<=0:
+            return "No interest added on zero or negative balance"
         interest = self.get_balance() * 5 / 100
         self.deposits.append(interest)
         return f"{self.name}, 5% interest of {interest} added. New balance: {self.get_balance()}"
@@ -131,4 +133,15 @@ class Account:
             return "Account successfully closed."
         else:
             return "Cannot close account. Balance or loan must be zero."
+
+acc1 = Account("Meron")
+acc2 = Account("Kidane")
+
+print(acc1.deposit(500))
+print(acc1.withdraw(200))
+print(acc1.transfer(100, acc2))
+print(acc1.get_loan(300))
+print(acc1.repay_loan(100))
+print(acc1.freeze_account())
+print(acc1.apply_interest())
 
