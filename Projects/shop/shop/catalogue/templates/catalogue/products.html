@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <title>Fresh Products</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 p-6">
+  <h1 class="text-4xl font-bold mb-6 text-center text-indigo-600">Fresh Products</h1>
+  <ul class="max-w-4xl mx-auto space-y-4">
+    {% for product in products %}
+      <li class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow flex justify-between items-center">
+        <a href="{% url 'product_detail' id=product.id %}" class="text-xl font-semibold text-indigo-700 hover:underline">
+          {{ product.name }}
+        </a>
+        <div class="text-gray-700">
+          <p>Price: ${{ product.price }}</p>
+          <p>{{ product.description }}</p>
+        </div>
+      </li>
+    {% empty %}
+      <li>No products available.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
