@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Cart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWL9x7HTnqTbpB0FDtYUFNsf3uze5qOo7-vQ&s" type="image/x-icon" />
+
+</head>
+
+<body class="bg-gray-50 p-6 flex min-h-screen">
+
+  <aside class="fixed top-0 left-0 w-64 h-full bg-green-800 text-white p-6 flex flex-col">
+  <h1 class="text-3xl font-bold mb-8">My Shop</h1>
+  <nav class="flex flex-col space-y-4 flex-grow">
+    <a href="{% url 'list_products' %}" class="hover:bg-green-900 p-3 rounded transition">Products</a>
+    <a href="{% url 'cart_detail' %}" class="hover:bg-green-900 p-3 rounded transition">Cart</a>
+    <a href="{% url 'create_product' %}" class=" hover:bg-green-900 p-3 rounded  transition">
+      Add Product
+    </a>
+  </nav>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <button type="submit" class="w-full text-left hover:bg-green-900 p-3 rounded font-semibold mt-auto transition">
+      Logout 
+    </button>
+  </form>
+</aside>
+
+  <main class="flex-grow max-w-2xl bg-white rounded-lg shadow-lg p-8 mx-auto">
+    <h2 class="text-3xl font-semibold mb-8 text-green-900">Shopping Cart</h2>
+
+    {% if cart.cart %}
+    <ul class="space-y-6">
+      {% for item in cart %}
+      <li class="flex justify-between items-center border-b pb-4">
+        <div>
+          <h4 class="text-xl font-bold mb-1">{{ item.product.name }}</h4>
+          <p>Quantity: {{ item.quantity }}</p>
+          <p>Price: ${{ item.price }}</p>
+          <p>Total: ${{ item.total_price }}</p>
+        </div>
+        <form method="post" action="{% url 'remove_from_cart' item.product.id %}">
+          {% csrf_token %}
+          <button type="submit" class="bg-red-700 hover:bg-red-800 text-white py-1 px-4 rounded transition">
+            Remove
+          </button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="text-right font-bold text-lg mt-6 text-green-900">
+      Cart Total: ${{ cart.get_total_price }}
+    </div>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+  </main>
+
+</body>
+
+</html>

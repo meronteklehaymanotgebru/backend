@@ -1,0 +1,21 @@
+{% extends "base_public.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+  <div class="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+    <h2 class="text-3xl font-bold mb-6 text-center text-green-800">Welcome Back!</h2>
+    <p class="text-center text-gray-600 mb-8">Please sign in to continue.</p>
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit"
+        class="w-full bg-green-800 hover:bg-green-900 text-white py-3 rounded-lg font-semibold transition duration-300">
+        Log In
+      </button>
+    </form>
+    {# Register link is removed until page exists #}
+  </div>
+</div>
+{% endblock %}
