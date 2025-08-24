@@ -1,30 +1,57 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
   <title>Fresh Products</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWL9x7HTnqTbpB0FDtYUFNsf3uze5qOo7-vQ&s" type="image/x-icon" />
+
 </head>
-<body class="bg-gray-100 p-6">
-  <h1 class="text-4xl font-bold mb-6 text-center text-indigo-600">Fresh Products</h1>
-  <ul class="max-w-4xl mx-auto space-y-4">
-    {% for product in products %}
-      <li class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow flex justify-between items-center">
-        <a href="{% url 'product_detail' id=product.id %}" class="text-xl font-semibold text-indigo-700 hover:underline">
+<body class="bg-gray-50 flex min-h-screen">
+
+  <aside class="fixed top-0 left-0 w-64 h-full bg-green-800 text-white p-6 flex flex-col">
+  <h1 class="text-3xl font-bold mb-8">My Shop</h1>
+  <nav class="flex flex-col space-y-4 flex-grow">
+    <a href="{% url 'list_products' %}" class="hover:bg-green-900 p-3 rounded transition">Products</a>
+    <a href="{% url 'cart_detail' %}" class="hover:bg-green-900 p-3 rounded transition">Cart</a>
+    <a href="{% url 'create_product' %}" class=" hover:bg-green-900 p-3 rounded  transition">
+      Add Product
+    </a>
+  </nav>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <button type="submit" class="w-full text-left hover:bg-green-900 p-3 rounded font-semibold mt-auto transition">
+      Logout 
+    </button>
+  </form>
+</aside>
+
+  <main class="flex-grow p-6 max-w-5xl mx-auto">
+    <h1 class="text-4xl font-bold mb-8 text-green-900 text-center">Fresh Products</h1>
+    <ul class="space-y-6">
+      {% for product in products %}
+      <li class="bg-white p-6 rounded-lg shadow-lg flex justify-between items-center">
+        <a href="{% url 'product_detail' id=product.id %}" class="text-2xl font-semibold text-green-800 hover:underline">
           {{ product.name }}
         </a>
-        <div class="text-gray-700">
-          <p>Price: ${{ product.price }}</p>
-          <p>{{ product.description }}</p>
+        <div class="text-green-700">
+          <p class="mb-1">Price: ${{ product.price }}</p>
+          <p class="mb-3">{{ product.description }}</p>
+
         </div>
       </li>
-    {% empty %}
+      {% empty %}
       <li>No products available.</li>
-    {% endfor %}
-  </ul>
+      {% endfor %}
+    </ul>
+  </main>
+
 </body>
 </html>

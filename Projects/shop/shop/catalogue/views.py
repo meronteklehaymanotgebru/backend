@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Cart, CartItem, Product
+from .forms import ProductForm
+from django.contrib.auth import logout
+
 def list_products(request):
     # http request
     products=Product.objects.all()
@@ -21,7 +24,16 @@ def product_detail(request,id):
     # what are we rendering is the request and the second argument is where
 
 
-
+@login_required
+def create_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)  # Add request.FILES here
+        if form.is_valid():
+            form.save()
+            return redirect('list_products')
+    else:
+        form = ProductForm()
+    return render(request, 'catalogue/product_form.html', {'form': form})
 
 @login_required
 def add_to_cart(request, product_id):
@@ -46,3 +58,10 @@ def remove_from_cart(request, product_id):
     cart_item = get_object_or_404(CartItem, cart=cart, product_id=product_id)
     cart_item.delete()
     return redirect('cart_detail')
+
+@login_required
+def logout_confirm_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('login') 
+    return render(request, 'registration/logout.html')

@@ -1,28 +1,55 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{ product.name }}</title>
-  <link href="{% static 'css/output.css' %}" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWL9x7HTnqTbpB0FDtYUFNsf3uze5qOo7-vQ&s" type="image/x-icon" />
 
 </head>
-<body class="bg-gray-50 p-8">
-  <div class="max-w-2xl mx-auto bg-white rounded-lg shadow p-6">
-    <h3 class="text-3xl font-bold text-indigo-700 mb-4">{{ product.name }}</h3>
+
+<body class="bg-gray-50 p-6 flex min-h-screen">
+
+  <aside class="fixed top-0 left-0 w-64 h-full bg-green-800 text-white p-6 flex flex-col">
+  <h1 class="text-3xl font-bold mb-8">My Shop</h1>
+  <nav class="flex flex-col space-y-4 flex-grow">
+    <a href="{% url 'list_products' %}" class="hover:bg-green-900 p-3 rounded transition">Products</a>
+    <a href="{% url 'cart_detail' %}" class="hover:bg-green-900 p-3 rounded transition">Cart</a>
+    <a href="{% url 'create_product' %}" class=" hover:bg-green-900 p-3 rounded  transition">
+      Add Product
+    </a>
+  </nav>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <button type="submit" class="w-full text-left hover:bg-green-900 p-3 rounded font-semibold mt-auto transition">
+      Logout 
+    </button>
+  </form>
+</aside>
+
+  <main class="flex-grow max-w-2xl bg-white rounded-lg shadow-lg p-8 mx-auto">
+    <h3 class="text-3xl font-bold text-green-900 mb-6">{{ product.name }}</h3>
     {% if product.image %}
-      <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-auto rounded-md mb-4" />
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-auto rounded-md mb-6" />
     {% endif %}
-    <p class="text-gray-700 mb-4">{{ product.description }}</p>
-    <b class="text-lg mb-4 block">Price: ${{ product.price }}</b>
+    <p class="text-green-700 mb-6">{{ product.description }}</p>
+    <b class="text-lg block mb-6">Price: ${{ product.price }}</b>
     <form method="post" action="{% url 'add_to_cart' product.id %}">
       {% csrf_token %}
-      <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+      <button type="submit" class="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-6 rounded transition shadow">
         Add to Cart
       </button>
     </form>
-  </div>
+  </main>
+
 </body>
+
 </html>
